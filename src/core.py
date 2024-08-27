@@ -47,7 +47,7 @@ def string_to_component(s, *arg, **kwarg):
     Parameters
     ----------
     s : string
-        One of 'W', 'R', 'L', 'J', 'C', 'G', dicatates the type 
+        One of 'W', 'R', 'L', 'J', 'C', 'G', dictates the type 
         of component to create
     args, kwargs : 
         Arguments needed for the component creation
@@ -82,7 +82,7 @@ class Qcircuit(object):
         capacitors (list): List of capacitor objects present in the circuit
         netlist (list): List of all components present in the circuit
         ref_elt (J or L): list of junction or inductor component used as a reference for the calculation 
-                        of zero-point fluctations, each index of the list corresponds to a different mode
+                        of zero-point fluctuations, each index of the list corresponds to a different mode
     """
 
     def __init__(self, netlist):
@@ -90,8 +90,8 @@ class Qcircuit(object):
 
         self.warn_discarded_mode = True # If this is set to True, the user will be notified when a mode is discarded.
         
-        # After an initial estimation of the complex eigenfrequenceis using a diaglinalization
-        # of the companion matrix, the frequencies are polishd to a tolerence
+        # After an initial estimation of the complex eigenfrequencies using a diagonalization
+        # of the companion matrix, the frequencies are polished to a tolerance
         # self.root_relative_tolerance using a gradient based root finder, with a maximum number of iterations self.root_max_iterations
         self.root_max_iterations = 1e4 
         self.root_relative_tolerance = 1e-12
@@ -105,9 +105,9 @@ class Qcircuit(object):
 
         self._network = _Network(netlist) # Converts the list of components into a network object
                 # The Network object has methods to compute of the admittance between two nodes
-                # or the tranfer function between two nodes and two others
+                # or the transfer function between two nodes and two others
         
-        # We construct (enpty) lists of all the different type of 
+        # We construct (empty) lists of all the different type of 
         # components that could be present in the circuit
         self.inductors = []
         self.capacitors = []
@@ -120,7 +120,7 @@ class Qcircuit(object):
         # with label 'L_1' can be obtained by ``Qcircuit.components['L_1']``
         self.components = {}
 
-        # Initialize a list which will contain the labels of the componentns which have
+        # Initialize a list which will contain the labels of the components which have
         # no value (these will have to be specified in most methods as a kwarg)
         self._no_value_components = []
 
@@ -252,7 +252,7 @@ class Qcircuit(object):
             # values for its circuit components or modes are too
             # decoupled, the symbolic 
             # calculations can yield an incorrect char_poly
-            # We can easily discard some of these casese by throwing away
+            # We can easily discard some of these cases by throwing away
             # negative solutions
             for w2_single in w2:
                 if np.real(w2_single) < 0 and self.warn_discarded_mode:
@@ -338,7 +338,7 @@ class Qcircuit(object):
                 # We can easily discard some of these cases by throwing away
                 # any solutions with a complex impedance (ImY'<0)
                 error_message = "Discarding f = %f Hz mode.\n"%(np.real(w/2/np.pi))
-                error_message += "since the calculation of zero-point-fluctuations was unsuccesful.\n"
+                error_message += "since the calculation of zero-point-fluctuations was unsuccessful.\n"
                 warn(error_message)
             else:
                 zeta.append(w)
@@ -401,7 +401,7 @@ class Qcircuit(object):
 
         :math:`\hat{H} = \sum_m hf_m\hat{a}_m^\dagger\hat{a}_m + \hat{U}`,
 
-        where :math:`h` is Plancks constant, 
+        where :math:`h` is Planck's constant, 
         :math:`\hat{a}_m` is the annihilation operator of the m-th
         normal mode of the circuit and :math:`f_m` is the frequency of 
         the m-th normal mode. The frequencies :math:`f_m` would
@@ -441,7 +441,7 @@ class Qcircuit(object):
         These loss rates :math:`\kappa_m` correspond to twice the imaginary parts
         of the complex frequencies which make the conductance matrix
         singular, or equivalently twice the imaginary parts of the poles of the impedance
-        calculated between the nodes of an inductor or josephon junction.
+        calculated between the nodes of an inductor or Josephon junction.
 
         For further details on the underlying theory, see https://arxiv.org/pdf/1908.10342.pdf.
         
@@ -756,7 +756,7 @@ class Qcircuit(object):
             except IndexError:
                 error_message ="There are only %d modes in the circuit, and you specified mode index %d "%(len(fs),m)
                 error_message +="corresponding to the %d-th mode."%(m+1)
-                # error_message +="\nNote that the numer of modes may change as one sweeps a parameter"
+                # error_message +="\nNote that the number of modes may change as one sweeps a parameter"
                 # error_message +=" for example if a 0 frequency, spurious mode becomes negative due to "
                 # error_message +="numerical imprecision. Adding a resistance to the circuit may help with this."
                 raise ValueError(error_message)
@@ -843,7 +843,7 @@ class Qcircuit(object):
         y_max = max([np.amax(x) for x in ys])
 
         x_margin = pp['x_fig_margin']
-        # ensures that any text labels are not cutoff
+        # ensures that any text labels are not cut-off
         y_margin = pp['y_fig_margin']
         fig = plt.figure(figsize=(
             ((x_max-x_min)+2.*x_margin)*pp["figsize_scaling"],
@@ -937,7 +937,7 @@ class Qcircuit(object):
 
         Since this is plotted for a single-photon amplitude coherent state, the absolute value
         of the annotation is equal to the
-        contribution of a mode to the zero-point fluctuations accross this component.
+        contribution of a mode to the zero-point fluctuations across this component.
 
         For more detail on the underlying theory, see https://arxiv.org/pdf/1908.10342.pdf.
         '''
@@ -948,7 +948,7 @@ class Qcircuit(object):
         self._plotting_normal_mode = True
 
         # This will set pp to plotting_parameters_normal_modes
-        # (see the definition of the Qcircuit._pp propoerty function)
+        # (see the definition of the Qcircuit._pp property function)
         pp = self._pp
 
         # Make sure this has been called on a 
@@ -1028,7 +1028,7 @@ class Qcircuit(object):
             # which concern the arrow
             ppnm = pp['normal_mode_arrow']
 
-            # linewidth
+            # line width
             lw = ppnm['min_lw']+value_01*(ppnm['max_lw']-ppnm['min_lw'])
 
             # head size
@@ -1204,7 +1204,7 @@ class Network(Qcircuit):
     On could, for example, construct an array of LC-resonators using a python ``for`` loop, which
     would be tedious using a graphical user interface.
     The disadvantage is that one cannot use the plotting tools :meth:`show` or 
-    :meth:`show_normal_modes` to visualize the circuit or its innerworkings.
+    :meth:`show_normal_modes` to visualize the circuit or its inner workings.
 
     Parameters
     ----------
@@ -1408,7 +1408,7 @@ class _Network(object):
         nodes_encountered = None, 
         start_node = None):
         '''
-        Determines if a nework is connected (graph theory term).
+        Determines if a network is connected (graph theory term).
         
         Starting at "start_node", 
         the algorithm will go from neighbouring node
@@ -1425,13 +1425,13 @@ class _Network(object):
         start_node = list(self.net_dict)[0] # Starting point of the algo
         
 
-        def add_neighboors_to_encountered_nodes(node):
+        def add_neighbours_to_encountered_nodes(node):
             if node not in encountered_nodes:
                 encountered_nodes.append(node)
-                for neighboor in self.net_dict[node]:
-                    add_neighboors_to_encountered_nodes(neighboor)
+                for neighbour in self.net_dict[node]:
+                    add_neighbours_to_encountered_nodes(neighbour)
 
-        add_neighboors_to_encountered_nodes(start_node)
+        add_neighbours_to_encountered_nodes(start_node)
 
         if len(encountered_nodes) != len(self.net_dict):
             return False
@@ -1521,7 +1521,7 @@ class _Network(object):
                 for i, ch in enumerate(chains):
 
                     # If both node of the wire have already been 
-                    # added to a same chain, don't do anyting
+                    # added to a same chain, don't do anything
                     if (nm in ch) and (np in ch):
                         added = True
 
@@ -1757,7 +1757,7 @@ class _Network(object):
             del self.net_dict[other_node][node_to_remove]
         del self.net_dict[node_to_remove]
 
-        # Add admittances Y_XY connecting nodes X,Y directly adjascent to 
+        # Add admittances Y_XY connecting nodes X,Y directly adjacent to 
         # the removed node
         for mesh_branch in mesh_to_add:
             self.connect(*mesh_branch)
@@ -1801,8 +1801,8 @@ class _Network(object):
         '''
         Returns the admittance in the branch connecting ``node_1`` and ``node_2``.
         If they are not directly connected through a single Component, this function
-        returns 0 (i.e. the admittnce of an open circuit).
-        This function is written to avoid calling try/except clauses repetitivly
+        returns 0 (i.e. the admittance of an open circuit).
+        This function is written to avoid calling try/except clauses repetitively
         to verify if ``self.net_dict[node_1][node_2]`` is an existing key
 
         Parameters
@@ -1874,14 +1874,14 @@ class _Network(object):
         # three components.
         # For this case, the ABCD matrix can be constructed following 
         # the before last case of Table 4.1 in Microwave Engineering (Pozar)
-        # Indeed, all these cases are equivelant to the network below:
+        # Indeed, all these cases are equivalent to the network below:
         #
         #  p1   --------- Y_3 ---------- p2 
         #           |               |
         #          Y_1             Y_2
         #           |               |
         #  gr   ------------------------ gr
-        # Note that the transfer function is independant of Y_1, this in essence 
+        # Note that the transfer function is independent of Y_1, this in essence 
         # a voltage divider (see https://en.wikipedia.org/wiki/Voltage_divider)
         # where the voltage at p2 is entirely determined by Y_2,Y_3 and the voltage at p1
 
@@ -1940,7 +1940,7 @@ class _Network(object):
 
         else:
             # Most complex case (discussed in the paper)
-            # First, compute the impence matrix of the lattice network following notations in 
+            # First, compute the impedance matrix of the lattice network following notations in 
             # https://www.globalspec.com/reference/71734/203279/10-11-lattice-networks
             # excerpt of Network Analysis & Circuit (By M. Arshad) section 10.11: LATTICE NETWORKS
             Ya = ntr.branch_admittance(node_left_plus, node_right_plus)
@@ -1972,8 +1972,8 @@ class _Network(object):
             A_lattice = (Ya + Yb)*(Yd + Yc)/(Ya*Yd-Yb*Yc)
             B_lattice = (Ya + Yb + Yc + Yd)/(Ya*Yd-Yb*Yc)
 
-            # The admittance accross the left port plays no role
-            # The admittance accross the right port comes into play to yield the A component
+            # The admittance across the left port plays no role
+            # The admittance across the right port comes into play to yield the A component
             # of the total ABCD matrix:
 
             A = A_lattice + B_lattice*ntr.branch_admittance(node_right_minus,node_right_plus)
@@ -2142,7 +2142,7 @@ class Component(Circuit):
                                         self.node_plus,self.node_minus] = tr_minus
 
         # Following Black-box quantization, 
-        # we assume the losses to be neglegible by 
+        # we assume the losses to be negligible by 
         # removing the imaginary part of the eigenfrequency
         # w = np.real(w)
         
@@ -2405,7 +2405,7 @@ class L(Component):
         Y = self._circuit._network.admittance(self.node_minus, self.node_plus)
 
         # Write the expression as a single fraction 
-        # with the numerator and denomenator as polynomials
+        # with the numerator and denominator as polynomials
         # (it combines but also "de-nests")      
         Y_together = sp.together(Y)
 

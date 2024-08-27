@@ -60,7 +60,7 @@ def track_event(track_events_to, event,sequence):
             #
             # Values '??' are not allowed
             #
-            # event_generate also dosnt like getting delta values for non
+            # event_generate also doesn't like getting delta values for non
             # MouseWheel events
             if (key in ["when","above","borderwidth","button","count","data",
                 "detail","focus","height","keycode","keysym","mode","override","place",
@@ -239,7 +239,7 @@ class CircuitEditor(tk.Canvas):
     split into two wires, each sharing a node with (node 1).
     
     However, if two wires cross, such that neither has a node placed on a wire, there will be no
-    splitting of wires or creation of new nodes. This case implements a cros-over.
+    splitting of wires or creation of new nodes. This case implements a cross-over.
     
     States
     ==============================
@@ -247,14 +247,14 @@ class CircuitEditor(tk.Canvas):
     We are implementing a pretty loose "finite state machine"
     system (see https://en.wikipedia.org/wiki/Finite-state_machine).
     The editor can be placed in certain states, which will activate
-    or disactivate certain functionalities, and exit that state
+    or deactivate certain functionalities, and exit that state
     which may steer the system towards another state. For example,
     when using the box selection tool, we do not want to allow the 
     user to create components, and as soon as the selection is done
     we go towards a state which allows it. The different states currently
     implemented are:
     * 0:    The default state of the system, entered when starting up the 
-            eidtor for example
+            editor for example
     * 1:    Dragging a component
     * 2:    Frozen editor when another window is open
     * 3:    Box selection
@@ -372,12 +372,12 @@ class CircuitEditor(tk.Canvas):
 
         self.copied_elements = []
         '''When elements are copied (or cut), 
-        deepcopies of these elements are made and
+        deep copies of these elements are made and
         they are stored without being displayed 
         in this list'''
 
         self.history = []
-        '''Everytime the user makes a change to the circuit, 
+        '''Every time the user makes a change to the circuit, 
         this list is appended with a string representation of 
         all the components in the circuit
         hence allowing us to undo an arbitrary number of user actions '''
@@ -401,7 +401,7 @@ class CircuitEditor(tk.Canvas):
         
         self.selection_rectangle_x_start = None
         self.selection_rectangle_y_start = None
-        '''If we start click and drag accross the 
+        '''If we start click and drag across the 
         canvas, and these are set to None, the 
         selection rectangle will be instantiated
         '''
@@ -411,7 +411,7 @@ class CircuitEditor(tk.Canvas):
         self.build_menubar()
         self.build_scrollbars()
         self.build_canvas()
-        self.define_permenant_bindings()
+        self.define_permanent_bindings()
         self.configure_scrollbars()
         self.set_canvas_center()
         self.load_or_create_netlist_file()
@@ -655,8 +655,8 @@ class CircuitEditor(tk.Canvas):
         places it in the grid of our window
 
         Actually in the previously called build_* functions, we have
-        defined frames, menubars, etc.. which are seperate from the canvas.
-        It is however convinient to do so since most of these definied buttons
+        defined frames, menubars, etc.. which are separate from the canvas.
+        It is however convenient to do so since most of these defined buttons
         or scrollbars will be acting on the canvas itself.
         '''
         tk.Canvas.__init__(
@@ -721,7 +721,7 @@ class CircuitEditor(tk.Canvas):
         
         # This function is only useful if we 
         # are tracking the actions of the user.
-        # Mouse motion is by default not binded to 
+        # Mouse motion is by default not bound to 
         # any function, here we bind it to a function
         # which does nothing, but, if tracking is turned
         # on, this function will be appended with tracking
@@ -756,7 +756,7 @@ class CircuitEditor(tk.Canvas):
         Initialize a set of variables which will allow us
         track what functionalities the user has employed so far.
         This will allow us to provide hints telling the user 
-        how to do stuff that he hasnt done yet.
+        how to do stuff that he hasn't done yet.
         '''
         
         self.used_arrows = False
@@ -804,7 +804,7 @@ class CircuitEditor(tk.Canvas):
         # No components are currently in creation
         self.in_creation = None
 
-        # unset commong bindings that may have been created elsewhere
+        # unset common bindings that may have been created elsewhere
         self.unset_temporary_bindings()
 
         # 
@@ -813,8 +813,8 @@ class CircuitEditor(tk.Canvas):
         # The cursor should be an arrow
         self.config(cursor='arrow')
 
-        # set all permenant bindings
-        self.set_bindings(self.permenant_bindings)
+        # set all permanent bindings
+        self.set_bindings(self.permanent_bindings)
 
         # Redraws grid and binds clicking the grid
         self.draw_grid()
@@ -834,7 +834,7 @@ class CircuitEditor(tk.Canvas):
 
         # unset nearly all bindings
         self.unset_temporary_bindings(exceptions = ["<Motion>"])
-        self.unset_bindings(self.permenant_bindings)
+        self.unset_bindings(self.permanent_bindings)
 
         # Allow scrolling and zooming
         self.set_bindings(
@@ -845,7 +845,7 @@ class CircuitEditor(tk.Canvas):
         self.hbar.unfreeze()
         self.vbar.unfreeze()
 
-        # Disactivate box selection and right clicking on 
+        # Deactivate box selection and right clicking on 
         # background when pasting elements by redrawing the 
         # grid with no bindings
         self.draw_grid(set_bindings = False)
@@ -861,7 +861,7 @@ class CircuitEditor(tk.Canvas):
         self.add_nodes()
         self.track_changes = True
 
-        # Save the changes that have occured
+        # Save the changes that have occurred
         self.save()
 
         # stop reroute all events (even outside of the editor)
@@ -877,11 +877,11 @@ class CircuitEditor(tk.Canvas):
         '''Freeze the Editor
         '''
         
-        # unset commong bindings that may have been created elsewhere
+        # unset common bindings that may have been created elsewhere
         self.unset_temporary_bindings()
 
-        # unset commong bindings that may have been created elsewhere
-        self.unset_bindings(self.permenant_bindings)
+        # unset common bindings that may have been created elsewhere
+        self.unset_bindings(self.permanent_bindings)
 
         # remove grid bindings
         self.draw_grid(set_bindings = False)
@@ -900,10 +900,10 @@ class CircuitEditor(tk.Canvas):
         '''When we are using the box selection tool
         '''
         
-        # unset commong bindings that may have been created elsewhere
-        self.unset_bindings(self.permenant_bindings)
+        # unset common bindings that may have been created elsewhere
+        self.unset_bindings(self.permanent_bindings)
 
-        # Disactivate right-clicking the background
+        # Deactivate right-clicking the background
         self.tag_bind( self.grid_id, "<Button-3>", lambda event:None)
 
         # Freeze scrollbars
@@ -917,7 +917,7 @@ class CircuitEditor(tk.Canvas):
         self.set_state(0)
 
     def set_state_4(self):
-        '''To set before we start creating somthing
+        '''To set before we start creating something
         '''
 
         # reroute all mouse-movements (even outside of the editor)
@@ -927,7 +927,7 @@ class CircuitEditor(tk.Canvas):
 
         # unset bindings
         self.unset_temporary_bindings()
-        self.unset_bindings(self.permenant_bindings)
+        self.unset_bindings(self.permanent_bindings)
         
         # Allow scrolling and zooming
         self.set_bindings(
@@ -938,7 +938,7 @@ class CircuitEditor(tk.Canvas):
         self.hbar.unfreeze()
         self.vbar.unfreeze()
 
-        # Disactivate box selection and right clicking on 
+        # Deactivate box selection and right clicking on 
         # background when pasting elements by redrawing the 
         # grid with no bindings
         self.draw_grid(set_bindings = False)
@@ -960,7 +960,7 @@ class CircuitEditor(tk.Canvas):
         self.add_nodes()
         self.track_changes = True
 
-        # Save the changes that have occured
+        # Save the changes that have occurred
         self.save()
 
         # Go back to state 0
@@ -1057,7 +1057,7 @@ class CircuitEditor(tk.Canvas):
                 self.history.append(netlist_string)
 
                 # and increase our location in the history 
-                # lsit by one
+                # list by one
                 self.history_location += 1
 
                 # Inform the user that the circuit was just saved
@@ -1193,10 +1193,10 @@ class CircuitEditor(tk.Canvas):
     # BINDINGS
     ###########################
     
-    def set_bindings(self,*args, exeptions = []):
+    def set_bindings(self,*args, exceptions = []):
         for binding_list in args:
             for binding in binding_list:
-                if binding[0] not in exeptions:
+                if binding[0] not in exceptions:
                     self.bind(*binding)
 
     def unset_bindings(self,*args, exceptions = []):
@@ -1274,7 +1274,7 @@ class CircuitEditor(tk.Canvas):
                 self.unbind(sequence.replace(key,paired_key))
         super(CircuitEditor, self).unbind(sequence)
 
-    def define_permenant_bindings(self):
+    def define_permanent_bindings(self):
         '''
         Assign keystrokes to functionalities
         accessible in the FILE, EDIT, VIEW menus, 
@@ -1342,7 +1342,7 @@ class CircuitEditor(tk.Canvas):
         ['<Shift-MouseWheel>', self.scroll_x_wheel],
         ['<MouseWheel>', self.scroll_y_wheel]]
 
-        self.permenant_bindings =\
+        self.permanent_bindings =\
             self.bindings_element_creation+\
             self.bindings_file+\
             self.bindings_edit+\
@@ -1352,7 +1352,7 @@ class CircuitEditor(tk.Canvas):
 
     def unset_temporary_bindings(self,exceptions=[]):
         '''
-        Unsets all temporary bindings.
+        Un-sets all temporary bindings.
         '''
         for sequence in [
             "<Escape>",
@@ -1415,7 +1415,7 @@ class CircuitEditor(tk.Canvas):
                 print("Loading file failed with error:")
                 print(e)
             else:
-                self.write_message("File succesfully loaded")
+                self.write_message("File successfully loaded")
             
             # Save changes and turn change tracker back on
             self.track_changes = True
@@ -1486,7 +1486,7 @@ class CircuitEditor(tk.Canvas):
         '''
         Called when the user ALT+Scrolls.
         Zooms in/out of the canvas.
-        Zooming works by chaning the grid_unit of the canvas
+        Zooming works by changing the grid_unit of the canvas
         and re-plotting all the circuit elements.
         During zooming, we move the circuit and grid such that
         the position of the mouse on the grid remains constant
@@ -1536,7 +1536,7 @@ class CircuitEditor(tk.Canvas):
 
         else:
 
-            # position of the mouse when the scrolling occured
+            # position of the mouse when the scrolling occurred
             # in old grid units
             grid_mouse_pos_old = self.canvas_to_grid(
                 [self.canvasx(event.x), self.canvasy(event.y)])
@@ -1545,7 +1545,7 @@ class CircuitEditor(tk.Canvas):
             self.grid_unit = new_grid_unit
 
             
-            # position of the mouse when the scrolling occured
+            # position of the mouse when the scrolling occurred
             # in canvas units
             canvas_mouse_pos = self.grid_to_canvas(grid_mouse_pos_old)
 
@@ -1587,7 +1587,7 @@ class CircuitEditor(tk.Canvas):
 
         extra_scrollable_region = 50 # in canvas units
         '''
-        if the circuit fulls the visible canvas, there will 
+        if the circuit fills the visible canvas, there will 
         still be a small gap in the scrollbar to indicate to
         the user he can use the scrollbars to scroll down by some 
         small amount
@@ -1599,8 +1599,8 @@ class CircuitEditor(tk.Canvas):
                       self.canvasx(self.winfo_width())+extra_scrollable_region,
                       self.canvasy(self.winfo_height())+extra_scrollable_region]
 
-        # If there are some drawn circuit elemnts
-        # set box_elemnts to describe the area filled by the circuit 
+        # If there are some drawn circuit elements
+        # set box_elements to describe the area filled by the circuit 
         # in canvas units
         if len(self.elements) > 0:
             xs = [el.x_minus for el in self.elements] + \
@@ -1610,7 +1610,7 @@ class CircuitEditor(tk.Canvas):
             box_elements = self.grid_to_canvas(
                 [min(xs)-1, min(ys)-1])+self.grid_to_canvas([max(xs)+1, max(ys)+1])
 
-            # If there are some drawn circuit elemnts, the scrollable region
+            # If there are some drawn circuit elements, the scrollable region
             # should show that the user has some circuit elements to discover
             # if he scrolls down/up/left/right
             self.configure(
@@ -1683,13 +1683,13 @@ class CircuitEditor(tk.Canvas):
         Adds selected elements to the self.copied_elements variable.
         '''
         
-        # Since deepcopying calls the __init__ of elements
+        # Since deep copying calls the __init__ of elements
         # we forbid any additions the history variable to be on the safe side
         self.track_changes = False
 
         to_copy = self.selected_elements
 
-        # If somthing has been copied 
+        # If something has been copied 
         # and then you do CTRL-C with nothing selected
         # the previously copied elements remained copied
         if len(to_copy)>0:
@@ -1844,10 +1844,10 @@ class CircuitEditor(tk.Canvas):
 
         The box will be deleted when the click is released.
 
-        As draggin ensues the function continuously deselct all the components, then goes through all
+        As dragging ensues the function continuously deselect all the components, then goes through all
         the components and selects those contained in the selection box.
 
-        Wheter a component is in or out of the box is determined by the components
+        Whether a component is in or out of the box is determined by the components
         box_select method which takes the coordinates of the selection rectangle as arguments.
 
         Parameters:
@@ -2056,7 +2056,7 @@ class CircuitEditor(tk.Canvas):
         self.coords(circle, x0, y0, x1, y1)
 
     #############################
-    #  POSITIONNING
+    #  POSITIONING
     ##############################
 
     def grid_to_canvas(self, pos):
@@ -2129,7 +2129,7 @@ class CircuitEditor(tk.Canvas):
 
         margin = 3
         '''
-        Mrgin between the circuit and the upper and left edges of the canvas.
+        Margin between the circuit and the upper and left edges of the canvas.
         In grid units.
         '''
 
@@ -2197,7 +2197,7 @@ class CircuitEditor(tk.Canvas):
             # the elements were following the mouse, 
             # they would move under the mouse
             # Using B1 here seems to be necessary when
-            # creating unittests
+            # creating unit tests
             self.event_generate(recentering_sequence, warp=False,
                 x=self.get_mouse_location(units='window')[0],
                 y=self.get_mouse_location(units='window')[1])
@@ -2211,7 +2211,7 @@ class CircuitEditor(tk.Canvas):
         '''
         Displays a message on the canvas.
         Called each time the circuit is saved, or to 
-        inform the user he cannot zoom anymore, etc...
+        inform the user he cannot zoom any more, etc...
 
         When unittesting this functionality is switched off since the "after" method
         will throw an error when it tries to call its command after the GUI closed
@@ -2224,7 +2224,7 @@ class CircuitEditor(tk.Canvas):
         '''
         if not self.unittesting:
             
-            # Prepend text to message conten already on screen
+            # Prepend text to message content already on screen
             self.message =  '\n'+text+self.message
 
             # Upload that content to the on-screen text widget
@@ -2389,7 +2389,7 @@ class TwoNodeElement(object):
         '''
         Called after initializing the creation of a component if the user:
         * presses escape
-        * initialize the creation of a different componennt 
+        * initialize the creation of a different component 
 
         Cancels the creation of the component, which will disappear.
         '''
@@ -2821,7 +2821,7 @@ class W(TwoNodeElement):
     @property
     def binding_object(self):
         '''
-        Object to which we bind all mehods
+        Object to which we bind all methods
         '''
         return self.line
     
@@ -3631,7 +3631,7 @@ class GuiWindow(ttk.Frame):
 
     In this class we manage the launching of the GUI
     and properties pertaining to the opened window
-    such as the titlebar and initial window size
+    such as the title bar and initial window size
     
     Parameters
     ----------
@@ -3683,7 +3683,7 @@ class GuiWindow(ttk.Frame):
                 if _verbose:
                     print("There has been an error loading the applications icon:\n"+str(e))
 
-        # Make the fram a 1x1 expandable grid
+        # Make the frame a 1x1 expandable grid
         self.master.rowconfigure(0, weight=1)
         self.master.columnconfigure(0, weight=1)
 
