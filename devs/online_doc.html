@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Writing documentation or website content &mdash; qucat  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=7ab3649f" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -98,31 +98,32 @@ cloned a version of the
 to your machine.</p>
 <p>The source code for the documentation is located in the
 <code class="docutils literal notranslate"><span class="pre">/docs_src/source</span></code> folder.
-The built documentation is stored in the <code class="docutils literal notranslate"><span class="pre">/docs/</span></code> folder.
-Through Github pages, the website (qucat.org) always
-matches the contents of the <code class="docutils literal notranslate"><span class="pre">/docs/</span></code> folder of the
-master branch.
+The built documentation is stored locally in the <code class="docutils literal notranslate"><span class="pre">/docs/</span></code> folder.
+Through GitHub Pages, the website (qucat.org) always
+matches the contents of the <code class="docutils literal notranslate"><span class="pre">/(root)/</span></code> folder of the
+<code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch.
 The website can be previewed locally by opening the <code class="docutils literal notranslate"><span class="pre">/docs/index.html</span></code>
 file with a web browser.</p>
 <p>In order to edit the documentation/website one should thus follow
 these steps</p>
 <ul class="simple">
 <li><p>edit the reStructuredText files located in <code class="docutils literal notranslate"><span class="pre">/docs_src/source</span></code></p></li>
-<li><p>build the documentation by runing the <code class="docutils literal notranslate"><span class="pre">build_docs.py</span></code> script</p></li>
+<li><p>build the documentation by running the <code class="docutils literal notranslate"><span class="pre">build_docs.py</span></code> script</p></li>
 <li><p>check the changes locally by opening the <code class="docutils literal notranslate"><span class="pre">/docs/index.html</span></code> file with a web browser</p></li>
-<li><p>push the code to the github repository</p></li>
-<li><p>Once the code is pulled into the master branch, these changes are automatically applied to the website.</p></li>
+<li><p>push the code to the GitHub repository. Note that the <code class="docutils literal notranslate"><span class="pre">/docs/</span></code> folder is not pushed to the GitHub repository</p></li>
+<li><p>once the code is pulled into the master branch, a GitHub Action will build the website and push the new <code class="docutils literal notranslate"><span class="pre">/docs/</span></code> folder to the root of the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch, which will automatically update the website.</p></li>
 </ul>
+<p>Do not make changes to the <code class="docutils literal notranslate"><span class="pre">gh-pages</span></code> branch directly, as it is automatically updated by the GitHub Action.</p>
 <p>Building the documentation,
 and editing the tutorials or the documentation of the functions
 requires specific instruction given below.</p>
 <section id="building-the-documentation">
 <h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Link to this heading"></a></h2>
-<p>The documentation can be built by runing the <code class="docutils literal notranslate"><span class="pre">build_docs.py</span></code> script.</p>
+<p>The documentation can be built by running the <code class="docutils literal notranslate"><span class="pre">build_docs.py</span></code> script.</p>
 <p>Some details about the build process:
 we use Sphinx to build the html content for the website
 from the reStructuredText (.rst) files located in <code class="docutils literal notranslate"><span class="pre">/docs_src/source</span></code>.
-This build process if configured through the <code class="docutils literal notranslate"><span class="pre">/docs_src/source/conf.py</span></code>.
+This build process is configured through the <code class="docutils literal notranslate"><span class="pre">/docs_src/source/conf.py</span></code>.
 Information on sphinx, on reStructuredText and the configuration file
 can be found online,
 notably <a class="reference external" href="http://www.sphinx-doc.org/en/master/">here</a>.</p>
@@ -158,7 +159,7 @@ details on the topic can be found
 has already been set up for all QuCAT classes,
 <strong>any public modules added to existing classes
 by a contributor, and correctly commented, will thus be automatically
-included in the documentaion website after their pull request
+included in the documentation website after their pull request
 is merged into the master branch</strong>.
 Details about how to write good docstrings
 which lead to
@@ -186,7 +187,7 @@ folder.</p>
 </ul>
 <p>In <strong>both cases</strong>, subsequently</p>
 <ul class="simple">
-<li><p>Build the documentation by runing the <code class="docutils literal notranslate"><span class="pre">build_docs.py</span></code> script</p></li>
+<li><p>Build the documentation by running the <code class="docutils literal notranslate"><span class="pre">build_docs.py</span></code> script</p></li>
 <li><p>Preview your changes by opening the <code class="docutils literal notranslate"><span class="pre">/docs/index.html</span></code> file with a web browser</p></li>
 <li><p>Make a pull request: your changes will be visible on the website when merged to the master branch</p></li>
 </ul>
