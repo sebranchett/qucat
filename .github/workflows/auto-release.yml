@@ -1,0 +1,53 @@
+name: Auto Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - 'testv*'
+    branches:
+      - master
+      - auto-release
+
+jobs:
+  dummy-job:
+    name: Dummy Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Dummy Step
+        run: echo "Dummy Step because I need at least one step without a condition"
+
+  tagged-release:
+    name: Tagged Release
+    if: startsWith(github.ref, 'refs/tags/v')  # true release
+    runs-on: ubuntu-latest
+    # needs:
+    #   - release-build
+
+    steps:
+      - name: Create Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            LICENSE
+
+  tagged-pre-release:
+    name: Pre-release
+    if: startsWith(github.ref, 'refs/tags/testv')  # pre-release
+    runs-on: ubuntu-latest
+    # needs:
+    #   - release-build
+
+    steps:
+      - name: Create Pre-release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Pre-release"
+          files: |
+            LICENSE
