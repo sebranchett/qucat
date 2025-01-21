@@ -27,4 +27,4 @@ classifiers=[
 
 [project.urls]
 Homepage = "https://qucat.org"
-Repository = "https://github.com/qucat/qucat"
+Repository = "https://github.com/sebranchett/qucat"
