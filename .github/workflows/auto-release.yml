@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Create Release
         uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
 
   tagged-pre-release:
     name: Pre-release
@@ -38,3 +40,4 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           prerelease: true
+          generateReleaseNotes: true
