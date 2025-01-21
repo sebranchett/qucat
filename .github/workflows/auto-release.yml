@@ -28,8 +28,6 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          files: |
-            LICENSE
 
   tagged-pre-release:
     name: Pre-release
@@ -46,5 +44,3 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: true
           title: "Pre-release"
-          files: |
-            LICENSE
