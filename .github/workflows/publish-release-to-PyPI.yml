@@ -29,6 +29,7 @@ jobs:
           name: python-package-distributions
           path: dist/
 
+# For a full release, publish to PyPI and create a GitHub release
   pypi-publish:
     name: Publish to PyPI
     if: startsWith(github.ref, 'refs/tags/v')  # publish to PyPI on tag pushes starting with 'v'
@@ -52,7 +53,22 @@ jobs:
       - name: Publish distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
 
-  publish-to-testpypi:
+  
+    GitHub-release:
+    name: GitHub Release
+    if: startsWith(github.ref, 'refs/tags/v')  # true release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+
+# For a pre-release, publish to TestPyPI and create a GitHub pre-release
+    publish-to-testpypi:
     name: Publish to TestPyPI if tagged
     if: startsWith(github.ref, 'refs/tags/testv')  # publish to testPyPI on tag pushes starting with 'testv'
     runs-on: ubuntu-latest
@@ -76,3 +92,17 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           repository-url: https://test.pypi.org/legacy/
+
+  GitHub-pre-release:
+    name: GitHub Pre-release
+    if: startsWith(github.ref, 'refs/tags/testv')  # pre-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Create Pre-release
+        uses: ncipollo/release-action@v1
+        with:
+          prerelease: true
+          generateReleaseNotes: true
