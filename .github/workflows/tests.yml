@@ -31,4 +31,4 @@ jobs:
         export DISPLAY=:99
         Xvfb :99 &
         python --version
-        pytest  # --cov=src
+        python -m pytest  # --cov=src
