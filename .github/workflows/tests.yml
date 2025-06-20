@@ -24,7 +24,7 @@ jobs:
       run: |
         conda install -y python=${{ matrix.python-version }}
         conda env update --file test-environment.yml --name base
-        conda install conda-forge::sqlite  # is this the cause of the error?
+        conda install conda-forge::sqlite conda-forge:libsqlite  # is this the cause of the error?
     - name: Test with pytest
       run: |
         # avoid tkinter error
