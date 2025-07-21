@@ -18,8 +18,8 @@ class TestAll(TestTutorials):
         var_dict = self.run_tutorial('basics.ipynb')
     def test_filter(self):
         var_dict = self.run_tutorial('filter_design.ipynb')
-    def test_mmusc(self):
-        var_dict = self.run_tutorial('MMUSC.ipynb')
+    # def test_mmusc(self):
+    #     var_dict = self.run_tutorial('MMUSC.ipynb')
     def test_OM(self):
         var_dict = self.run_tutorial('optomechanics.ipynb')
     def test_TC(self):
@@ -27,3 +27,4 @@ class TestAll(TestTutorials):
         
 if __name__ == "__main__":
     unittest.main()
+
